@@ -5,7 +5,6 @@
 
 # include "csparse.h"
 
-cs *cs_add ( const cs *A, const cs *B, double alpha, double beta )
 /*
   Purpose:
 
@@ -17,6 +16,7 @@ cs *cs_add ( const cs *A, const cs *B, double alpha, double beta )
     Direct Methods for Sparse Linear Systems,
     SIAM, Philadelphia, 2006.
 */
+cs *cs_add ( const cs *A, const cs *B, double alpha, double beta )
 {
     int p, j, nz = 0, anz, *Cp, *Ci, *Bp, m, n, bnz, *w, values ;
     double *x, *Bx, *Cx ;
@@ -41,7 +41,7 @@ cs *cs_add ( const cs *A, const cs *B, double alpha, double beta )
     cs_sprealloc (C, 0) ;		/* remove extra space from C */
     return (cs_done (C, w, x, 1)) ;	/* success; free workspace, return C */
 }
-static int cs_wclear (int mark, int lemax, int *w, int n)
+
 /*
   Purpose:
 
@@ -53,6 +53,7 @@ static int cs_wclear (int mark, int lemax, int *w, int n)
     Direct Methods for Sparse Linear Systems,
     SIAM, Philadelphia, 2006.
 */
+static int cs_wclear (int mark, int lemax, int *w, int n)
 {
     int k ;
     if (mark < 2 || (mark + lemax < 0))
@@ -70,7 +71,6 @@ static int cs_diag (int i, int j, double aij, void *other)
 }
 
 /* p = amd(A+A') if symmetric is true, or amd(A'A) otherwise */
-int *cs_amd ( const cs *A, int order )  
 /*
   Purpose:
 
@@ -90,6 +90,7 @@ int *cs_amd ( const cs *A, int order )
     1:LU, 
     2:QR
 */
+int *cs_amd ( const cs *A, int order )  
 {
     cs *C, *A2, *AT ;
     int *Cp, *Ci, *last, *ww, *len, *nv, *next, *P, *head, *elen, *degree, *w,
@@ -725,13 +726,12 @@ static void cs_matched (int m, const int *wi, const int *jmatch, int *P, int *Q,
     rr [set] = kr ;
 }
 
-
-static void cs_unmatched (int m, const int *wi, int *P, int *rr, int set)
 /* 
   Purpose:
 
     CS_UNMATCHED collects unmatched rows into the permutation vector P.
 */
+static void cs_unmatched (int m, const int *wi, int *P, int *rr, int set)
 {
     int i, kr = rr [set] ;
     for (i = 0 ; i < m ; i++) if (wi [i] == 0) P [kr++] = i ;
@@ -841,7 +841,7 @@ int cs_dropzeros (cs *A)
 {
     return (cs_fkeep (A, &cs_nonzero, NULL)) ;	/* keep all nonzero entries */
 }
-int cs_dupl (cs *A)
+
 /*
   Purpose:
 
@@ -853,6 +853,7 @@ int cs_dupl (cs *A)
     Direct Methods for Sparse Linear Systems,
     SIAM, Philadelphia, 2006.
 */
+int cs_dupl (cs *A)
 {
     int i, j, p, q, nz = 0, n, m, *Ap, *Ai, *w ;
     double *Ax ;
@@ -1017,7 +1018,7 @@ int cs_ipvec (int n, const int *P, const double *b, double *x)
     for (k = 0 ; k < n ; k++) x [P ? P [k] : k] = b [k] ;
     return (1) ;
 }
-cs *cs_load ( FILE *f )
+
 /*
   Purpose:
 
@@ -1029,6 +1030,7 @@ cs *cs_load ( FILE *f )
     Direct Methods for Sparse Linear Systems,
     SIAM, Philadelphia, 2006.
 */
+cs *cs_load ( FILE *f )
 {
     int i, j ;
     double x ;
@@ -1041,7 +1043,7 @@ cs *cs_load ( FILE *f )
     }
     return (T) ;
 }
-int cs_lsolve ( const cs *L, double *x )
+
 /*
   Purpose:
 
@@ -1057,6 +1059,7 @@ int cs_lsolve ( const cs *L, double *x )
     Direct Methods for Sparse Linear Systems,
     SIAM, Philadelphia, 2006.
 */
+int cs_lsolve ( const cs *L, double *x )
 {
     int p, j, n, *Lp, *Li ;
     double *Lx ;
@@ -1072,7 +1075,7 @@ int cs_lsolve ( const cs *L, double *x )
     }
     return (1) ;
 }
-int cs_ltsolve ( const cs *L, double *x )
+
 /*
   Purpose:
 
@@ -1088,6 +1091,8 @@ int cs_ltsolve ( const cs *L, double *x )
     Direct Methods for Sparse Linear Systems,
     SIAM, Philadelphia, 2006.
 */
+int cs_ltsolve ( const cs *L, double *x )
+
 {
     int p, j, n, *Lp, *Li ;
     double *Lx ;
